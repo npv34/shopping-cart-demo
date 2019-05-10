@@ -21,14 +21,13 @@ class Cart
 
     public function add($item, $id)
     {
+        //Tao mot phan tu trong gio hang
         $storedItem = ['qty' => 0, 'price' => $item->price, 'item' => $item];
         if ($this->items) {
             //Kiem tra san pham da ton tai trong gio hang chua
-            //Neu co roi thi cap nhat so luong sp
+            //Neu co roi thi cap nhat phan tu do
             if (array_key_exists($id, $this->items)) {
                 $storedItem = $this->items[$id];
-            } else {
-                echo  $id;
             }
         }
 
@@ -40,6 +39,6 @@ class Cart
         $this->totalQty++;
         //Tinh tong gia tien trong gi hang
         $this->totalPrice += $item->price;
-
     }
+
 }
