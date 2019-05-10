@@ -49,7 +49,7 @@ class ShoppingCartController extends Controller
             //Cap nhat lai danh sach san pham trong gio hang
             $cart->items = $productsIntoCart;
             Session::put('cart', $cart);
-            Session::flash('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
+            Session::flash('delete_success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
         }
 
         return redirect()->back();
