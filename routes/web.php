@@ -16,3 +16,4 @@ Route::get('/','HomeController@index')->name('cart.index');
 Route::get('/cart','ShoppingCartController@index')->name('cart.index');
 
 Route::get('/add-to-cart/{id}', 'ShoppingCartController@addToCart')->name('cart.addToCart');
+Route::get('/remove-to-cart/{id}', 'ShoppingCartController@removeProductIntoCart')->name('cart.removeProductIntoCart');
