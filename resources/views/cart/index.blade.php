@@ -1,10 +1,10 @@
 @extends('welcome')
 @section('content')
     <h1>{{ "Chi tiết giỏ hàng" }}</h1>
-    @if (Session::has('success'))
+    @if (Session::has('delete_success'))
         <div class="col-12 alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ Session::get('success') }}</strong>
+            <strong>{{ Session::get('delete_success') }}</strong>
         </div>
 
     @endif
