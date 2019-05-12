@@ -1,12 +1,19 @@
 @extends('welcome')
 @section('content')
     <h1>{{ "Chi tiết giỏ hàng" }}</h1>
-    @if (Session::has('delete_success'))
+    @if (Session::has('success'))
         <div class="col-12 alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ Session::get('delete_success') }}</strong>
+            <strong>{{ Session::get('success') }}</strong>
         </div>
 
+    @endif
+
+    @if (Session::has('delete_error'))
+        <div class="col-12 alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ Session::get('delete_error') }}</strong>
+        </div>
     @endif
     <div class="col-12 col-md-12 mt-2 border">
         <table id="cart" class="table table-hover">
@@ -34,14 +41,18 @@
                             </div>
                         </td>
                         <td data-th="Price">{{ '$' . $product['item']->price }}</td>
-                        <td data-th="Quantity">
-                            <input type="number" class="form-control text-center" value="{{ $product['qty'] }}">
-                        </td>
-                        <td data-th="Subtotal" class="text-center">{{ $product['price']  }}</td>
-                        <td class="actions" data-th="">
-                            <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                            <a class="btn btn-danger btn-sm" href="{{ route('cart.removeProductIntoCart', $product['item']->id) }}"><i class="fa fa-trash-o"></i></a>
-                        </td>
+
+                        <form action="{{ route('cart.updateProductIntoCart', $product['item']->id) }}" method="post">
+                            @csrf
+                            <td data-th="Quantity">
+                                <input type="number" class="form-control text-center" min="0" name="qty" value="{{ $product['qty'] }}">
+                            </td>
+                            <td data-th="Subtotal" class="text-center">{{ $product['price']  }}</td>
+                            <td class="actions" data-th="">
+                                <button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button>
+                                <a class="btn btn-danger btn-sm" href="{{ route('cart.removeProductIntoCart', $product['item']->id) }}"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </form>
                     </tr>
                 @endforeach
             </tbody>
