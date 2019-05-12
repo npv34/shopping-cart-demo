@@ -11,6 +11,14 @@
 
         @endif
 
+        @if (Session::has('delete_error'))
+            <div class="col-12 alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ Session::get('delete_error') }}</strong>
+            </div>
+
+        @endif
+
         @forelse($products as $product)
             <div class="col-md-3 col-sm-6">
                 <div class="product-grid">
