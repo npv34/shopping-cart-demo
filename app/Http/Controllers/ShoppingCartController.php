@@ -61,14 +61,22 @@ class ShoppingCartController extends Controller
                 $cart = new Cart($oldCart);
                 $cart->update($request, $productId);
                 Session::put('cart', $cart);
-                Session::flash('success', 'Cập nhật thành công!');
+                $message = 'Cập nhật thành công';
+
             } else {
-                Session::flash('delete_error', 'Bạn chưa mua sản phẩm nào');
+                $message = 'Bạn chưa mua sản phẩm nào';
             }
         } else {
-            Session::flash('delete_error', 'Bạn chưa mua sản phẩm nào');
+            $message = 'Bạn chưa mua sản phẩm nào';
         }
-        return redirect()->back();
+        //thiet ke du lieu tra ve
+        $data = [
+            'productUpdate' => Session::get('cart')->items[$productId],
+            'message' => $message,
+            'totalPriceCart' => Session::get('cart')->totalPrice
+        ];
+
+        return response()->json($data);
     }
 
 }

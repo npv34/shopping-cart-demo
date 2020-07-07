@@ -40,24 +40,19 @@
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">
+                        <td data-th="Price"">
                             {{ '$' . $product['item']->price }}
                         </td>
-
-                        <form action="{{ route('cart.updateProductIntoCart', $product['item']->id) }}" method="post">
-                            @csrf
-                            <td data-th="Quantity">
-                                <input type="number" class="form-control text-center" min="0" name="qty"
+                         <td data-th="Quantity">
+                                <input type="number" data-id="{{ $product['item']->id }}" class="form-control text-center update-product-cart" min="0" name="qty"
                                        value="{{ $product['qty'] }}">
                             </td>
-                            <td data-th="Subtotal" class="text-center">{{ '$' . $product['price']  }}</td>
+                            <td data-th="Subtotal" id="product-subtotal-{{$product['item']->id}}" class="text-center">{{ '$' . $product['price']  }}</td>
                             <td class="actions" data-th="">
-                                <button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button>
                                 <a class="btn btn-danger btn-sm"
                                    href="{{ route('cart.removeProductIntoCart', $product['item']->id) }}"><i
                                         class="fa fa-trash-o"></i></a>
                             </td>
-                        </form>
                     </tr>
                 @endforeach
             </tbody>
@@ -66,7 +61,7 @@
                 <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 </td>
                 <td colspan="2" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Tổng tiền: ${{ $cart->totalPrice }}</strong></td>
+                <td id="total-price-cart" class="hidden-xs text-center"><strong>Tổng tiền: ${{ $cart->totalPrice }}</strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
             </tfoot>
