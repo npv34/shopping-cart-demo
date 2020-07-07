@@ -1,6 +1,6 @@
 @extends('welcome')
 @section('content')
-    <h1>{{ "Chi tiết giỏ hàng" }}</h1>
+    <h2 class="text-center m-4">{{ "Chi tiết giỏ hàng" }}</h2>
     @if (Session::has('success'))
         <div class="col-12 alert alert-success alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -8,7 +8,6 @@
         </div>
 
     @endif
-
     @if (Session::has('delete_error'))
         <div class="col-12 alert alert-danger alert-block">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -16,7 +15,7 @@
         </div>
     @endif
     <div class="col-12 col-md-12 mt-2 border">
-        <table id="cart" class="table table-hover">
+        <table id="cart" class="table table-hover table-bordered mt-4">
             <thead>
             <tr>
                 <th style="width:50%">Product</th>
@@ -27,39 +26,42 @@
             </tr>
             </thead>
             <tbody>
-            @if(Session::has('cart'))
+            @if(Session::has('cart') && $cart->totalQty > 0)
                 @foreach($cart->items as $product)
                     <tr>
                         <td data-th="Product">
                             <div class="row">
-                                <div class="col-md-2 hidden-xs"><img src="{{ asset('storage/' . $product['item']->image) }}"
-                                                                     alt="..."
-                                                                     class="img-responsive" width="100%"/></div>
+                                <div class="col-md-2 hidden-xs"><img
+                                        src="{{ asset('storage/' . $product['item']->image) }}"
+                                        alt="..."
+                                        class="img-responsive" width="100%"/></div>
                                 <div class="col-md-10">
                                     <h4 class="nomargin">{{ $product['item']->name }}</h4>
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price">{{ '$' . $product['item']->price }}</td>
+                        <td data-th="Price">
+                            {{ '$' . $product['item']->price }}
+                        </td>
 
                         <form action="{{ route('cart.updateProductIntoCart', $product['item']->id) }}" method="post">
                             @csrf
                             <td data-th="Quantity">
-                                <input type="number" class="form-control text-center" min="0" name="qty" value="{{ $product['qty'] }}">
+                                <input type="number" class="form-control text-center" min="0" name="qty"
+                                       value="{{ $product['qty'] }}">
                             </td>
-                            <td data-th="Subtotal" class="text-center">{{ $product['price']  }}</td>
+                            <td data-th="Subtotal" class="text-center">{{ '$' . $product['price']  }}</td>
                             <td class="actions" data-th="">
                                 <button class="btn btn-info btn-sm" type="submit"><i class="fa fa-refresh"></i></button>
-                                <a class="btn btn-danger btn-sm" href="{{ route('cart.removeProductIntoCart', $product['item']->id) }}"><i class="fa fa-trash-o"></i></a>
+                                <a class="btn btn-danger btn-sm"
+                                   href="{{ route('cart.removeProductIntoCart', $product['item']->id) }}"><i
+                                        class="fa fa-trash-o"></i></a>
                             </td>
                         </form>
                     </tr>
                 @endforeach
             </tbody>
             <tfoot>
-            <tr class="visible-xs">
-                <td class="text-center"><strong>Tổng tiền: ${{ $cart->totalPrice }}</strong></td>
-            </tr>
             <tr>
                 <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 </td>

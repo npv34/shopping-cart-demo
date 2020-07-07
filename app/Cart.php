@@ -49,10 +49,12 @@ class Cart
                 $priceProDelete = $productsIntoCart[$id]['price'];
                 $this->totalPrice -= $priceProDelete;
                 //giam tong so luong san pham co trong gio hang
-                $this->totalQty--;
+                $this->totalQty -= $productsIntoCart[$id]['qty'];
                 unset($productsIntoCart[$id]);
                 $this->items = $productsIntoCart;
             }
+        } else {
+            $this->totalQty = 0;
         }
     }
 
